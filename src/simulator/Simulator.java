@@ -1,8 +1,12 @@
 package simulator;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Simulator<T extends IActionable> {
+
+	private final List<ISimulationListener> observateurList = new CopyOnWriteArrayList<>();
+
 
 	/** Execution delay in milliseconds */
 	private volatile int executionDelay;
@@ -29,6 +33,15 @@ public class Simulator<T extends IActionable> {
 		// expose the void run() method to the outside world. We want to well
 		// encapsulate the whole idea of a thread.
 		// thread cannot be restarted so we need to always create a new one
+
+		/*if (thread != null) {
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}*/
+
 		thread = new Thread() {
 			@Override
 			public void run() {
@@ -51,7 +64,11 @@ public class Simulator<T extends IActionable> {
 						throw new RuntimeException(e);
 					}
 
+					// ajout du notify
+
+
 					simulate();
+					notifySimulatorListeners();
 				}
 			}
 		};
@@ -89,6 +106,20 @@ public class Simulator<T extends IActionable> {
 					"Execution telay is must be greater than zero.");
 		}
 		this.executionDelay = executionDelay;
+	}
+
+	public void notifySimulatorListeners() {
+		for (ISimulationListener l : observateurList) {
+			l.simulationCycle();
+		}
+	}
+
+	public void addSimulatorListeners(ISimulationListener listener) {
+		observateurList.add(listener);
+	}
+
+	public void removeSimulatorListeners(ISimulationListener listener) {
+		observateurList.remove(listener);
 	}
 
 }

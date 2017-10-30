@@ -9,6 +9,7 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.util.Iterator;
 
+import simulator.ISimulationListener;
 import visual.Visualizer;
 import creatures.ICreature;
 
@@ -33,6 +34,14 @@ public class CreatureVisualizer extends Visualizer {
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				handleMouseMoved(e);
+			}
+		});
+
+		// j'ajoute l'Observeur dans le sumilator
+		simulator.addSimulatorListeners(new ISimulationListener() {
+			@Override
+			public void simulationCycle() {
+				repaint();
 			}
 		});
 
