@@ -2,9 +2,7 @@ package creatures.visual;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.util.Iterator;
@@ -46,6 +44,15 @@ public class CreatureVisualizer extends Visualizer {
 		});
 
 		// TODO: change the size of the simulator
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				super.componentResized(e);
+				synchronized (simulator) {
+					simulator.setSize(getSize());
+				}
+			}
+		});
 	}
 
 	protected void handleMouseMoved(MouseEvent event) {
