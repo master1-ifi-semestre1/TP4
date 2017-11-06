@@ -10,8 +10,12 @@ import java.awt.geom.Point2D;
 import javax.swing.JFrame;
 
 import creatures.BouncingCreature;
+import creatures.IEnvironment;
 import creatures.visual.CreatureSimulator;
 import creatures.visual.CreatureVisualizer;
+import factory.FactoryBouncingCreature;
+import factory.FactorySmartCreature;
+import factory.FactoryStupidCreature;
 
 /**
  * Just a simple test of the simulator.
@@ -48,7 +52,10 @@ public class Launcher extends JFrame {
 	}
 
 	public void init() {
-		simulator.getCreatures().add(new BouncingCreature(simulator, new Point2D.Double(0, 0), 3, 0, Color.BLUE));
+		//simulator.getCreatures().add(new BouncingCreature(simulator, new Point2D.Double(0, 0), 3, 0, Color.BLUE));
+		simulator.getCreatures().addAll(new FactorySmartCreature(simulator).createCreatures(simulator, new Point2D.Double(0, 0), 3, 0, Color.GREEN));
+		simulator.getCreatures().addAll(new FactoryStupidCreature(simulator).createCreatures(simulator, new Point2D.Double(0, 0), 6, 1, Color.GRAY));
+		simulator.getCreatures().addAll(new FactoryBouncingCreature(simulator).createCreatures(simulator, new Point2D.Double(0, 0), 9, 0, Color.BLUE));
 		simulator.start();
 	}
 	

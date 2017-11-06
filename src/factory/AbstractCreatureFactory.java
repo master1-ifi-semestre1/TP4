@@ -4,7 +4,7 @@ import creatures.IEnvironment;
 import creatures.visual.CreatureSimulator;
 import simulator.Simulator;
 
-public class CreatureFactory {
+public class AbstractCreatureFactory {
 
     final int NOMBRE_CREATURE = 10;
 
