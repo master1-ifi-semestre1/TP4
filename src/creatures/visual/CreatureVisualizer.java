@@ -44,6 +44,7 @@ public class CreatureVisualizer extends Visualizer {
 		});
 
 		// TODO: change the size of the simulator
+		// DONE
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
